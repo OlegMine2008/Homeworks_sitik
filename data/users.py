@@ -10,6 +10,7 @@ class User(SqlAlchemyBase):
                            primary_key=True,
                            autoincrement=True)
     name = sqlalchemy.Column(sqlalchemy.String, nullable=True)
+    status = sqlalchemy.Column(sqlalchemy.String)
     about = sqlalchemy.Column(sqlalchemy.String, nullable=True)
     email = sqlalchemy.Column(sqlalchemy.String,
                               unique=True,
