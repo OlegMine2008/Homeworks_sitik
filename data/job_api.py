@@ -1,6 +1,6 @@
 import flask
 
-from data import db_session
+from . import db_session
 from .jobs import Jobs
 from .addjob import AddJobForm
 
