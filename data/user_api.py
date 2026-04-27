@@ -2,9 +2,9 @@ import flask
 from flask_login import LoginManager, login_user, login_required, logout_user
 
 from . import db_session
-from users import User
-from register_form import RegisterForm
-from login_form import LoginForm
+from .users import User
+from .register_form import RegisterForm
+from .login_form import LoginForm
 
 user_blueprint = flask.Blueprint(
     'user_api',

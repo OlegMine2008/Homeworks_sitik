@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "main_page.html" %}
 
 {% block content %}
 <h1>Register Form</h1>
@@ -36,7 +36,7 @@
     <p>
         {{ form.name.label }}<br>
         {{ form.name(class="form-control") }}<br>
-        {% for error in form.surname.errors %}
+        {% for error in form.name.errors %}
     <p class="alert alert-danger" role="alert">
         {{ error }}
     </p>
@@ -45,7 +45,7 @@
     <p>
         {{ form.status.label }}<br>
         {{ form.status(class="form-control") }}<br>
-        {% for error in form.age.errors %}
+        {% for error in form.status.errors %}
     <p class="alert alert-danger" role="alert">
         {{ error }}
     </p>
