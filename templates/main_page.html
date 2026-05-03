@@ -14,7 +14,7 @@
         <a class="navbar-brand" href="#">Задания:</a>
         {% if current_user.is_authenticated %}
           <p>
-            <a class="navbar-brand" href="/addjob">Новое дз</a>
+            <a class="btn btn-primary" href="/addjob">Новое ДЗ</a>
             <a class="navbar-brand" href="/logout">{{ current_user.name }}</a>
           </p>
         {% else %}

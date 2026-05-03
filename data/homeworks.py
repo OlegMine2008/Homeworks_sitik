@@ -15,8 +15,9 @@ class Hometask(SqlAlchemyBase):
     students = sqlalchemy.Column(sqlalchemy.Integer, 
                                 sqlalchemy.ForeignKey('user.id'),
                                 nullable=True)
-    dayofweek = sqlalchemy.Column(sqlalchemy.Integer,
-                                  sqlalchemy.ForeignKey('week.id'))
+    # dayofweek = sqlalchemy.Column(sqlalchemy.Integer,
+    #                               sqlalchemy.ForeignKey('week.id'))
+    file =sqlalchemy.Column()
 
     user = orm.relationship('User')
     week = orm.relationship('WeekDay')
