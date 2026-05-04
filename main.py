@@ -5,6 +5,7 @@ from flask_login import LoginManager, login_user, login_required, logout_user
 from data.db_session import global_init, create_session
 from data.users import User
 from data.user_api import user_blueprint
+from data.homeworks import Hometask
 
 
 app = Flask(__name__)
@@ -24,9 +25,10 @@ def load_user(user_id):
 @app.route('/')
 def index():
     db_sess = create_session()
-    users = db_sess.query(User.id, User.name).all()
-    names = {user_id: user_name for user_id, user_name in users}
-    return render_template('main_page.html', names=names, title='Work log')
+    jobs = db_sess.query(Hometask).all()
+    users = db_sess.query(User).all()
+    names = {name.id: (name.name) for name in users}
+    return render_template('index.html', names=names, jobs=jobs, title='Work log')
 
 
 def main():

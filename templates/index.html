@@ -1,0 +1,21 @@
+{% extends "main_page.html" %}
+
+{% block content %}
+<meta charset="UTF-8">
+
+<h2 align="center">Works log</h2>
+
+<div class="cards_container">
+    {% for job in jobs %}
+    <div class="card">
+        <div>{{ job.homework.capitalize() }}</div>
+        <div>Teacher: {{ names.get(job.teacher, 'Unknown') }}</div>
+        <div>Student: {{ names.get(job.students, 'Unknown') }}</div>
+        <div>Date: {{ job.date }}</div>
+        <div>Subject: {{ job.subject }}</div>
+        <div>File: {{ job.file or 'No file' }}</div>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}

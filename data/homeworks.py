@@ -11,13 +11,14 @@ class Hometask(SqlAlchemyBase):
                            autoincrement=True)
     homework = sqlalchemy.Column(sqlalchemy.String)
     teacher = sqlalchemy.Column(sqlalchemy.Integer, 
-                                sqlalchemy.ForeignKey('user.id'))
+                                sqlalchemy.ForeignKey('users.id'))
     students = sqlalchemy.Column(sqlalchemy.Integer, 
-                                sqlalchemy.ForeignKey('user.id'),
+                                sqlalchemy.ForeignKey('users.id'),
                                 nullable=True)
-    # dayofweek = sqlalchemy.Column(sqlalchemy.Integer,
-    #                               sqlalchemy.ForeignKey('week.id'))
-    file =sqlalchemy.Column()
+    date = sqlalchemy.Column()
+    subject = sqlalchemy.Column(sqlalchemy.Integer, 
+                                sqlalchemy.ForeignKey('subjects.id'))
+    file = sqlalchemy.Column(sqlalchemy.String, nullable=True)
 
-    user = orm.relationship('User')
-    week = orm.relationship('WeekDay')
+    teacher_user = orm.relationship('User', foreign_keys=[teacher])
+    student_user = orm.relationship('User', foreign_keys=[students])
