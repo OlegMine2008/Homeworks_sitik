@@ -43,7 +43,7 @@
     {% endfor %}
     </p>
     <p>
-        {{ form.status.label }}<br>
+        {{ form.status.select }}<br>
         {{ form.status(class="form-control") }}<br>
         {% for error in form.status.errors %}
     <p class="alert alert-danger" role="alert">

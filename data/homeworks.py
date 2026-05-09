@@ -2,6 +2,8 @@ import sqlalchemy
 from sqlalchemy import orm
 
 from .db_session import SqlAlchemyBase
+from .subject import Subject
+from .users import User
 
 class Hometask(SqlAlchemyBase):
     __tablename__ = 'homeworks'
@@ -20,6 +22,6 @@ class Hometask(SqlAlchemyBase):
                                 sqlalchemy.ForeignKey('subjects.id'))
     file = sqlalchemy.Column(sqlalchemy.String, nullable=True)
 
-    teacher_user = orm.relationship('User', foreign_keys=[teacher])
-    student_user = orm.relationship('User', foreign_keys=[students])
-    subjects = orm.relationship('Subject', foreign_keys=[subject])
+    teacher_user = orm.relationship(User, foreign_keys=[teacher])
+    student_user = orm.relationship(User, foreign_keys=[students])
+    subjects = orm.relationship(Subject, foreign_keys=[subject])
