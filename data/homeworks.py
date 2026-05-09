@@ -22,3 +22,4 @@ class Hometask(SqlAlchemyBase):
 
     teacher_user = orm.relationship('User', foreign_keys=[teacher])
     student_user = orm.relationship('User', foreign_keys=[students])
+    subjects = orm.relationship('Subject', foreign_keys=[subject])

@@ -6,10 +6,12 @@ from data.db_session import global_init, create_session
 from data.users import User
 from data.user_api import user_blueprint
 from data.homeworks import Hometask
+from data.job_api import hometask_blueprint
 
 
 app = Flask(__name__)
 app.register_blueprint(user_blueprint)
+app.register_blueprint(hometask_blueprint)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
 
 login_manager = LoginManager()

@@ -4,14 +4,14 @@ from . import db_session
 from data.homeworks import Hometask
 from .addhome import AddTaskForm
 
-blueprint = flask.Blueprint(
-    'job_api',
+hometask_blueprint = flask.Blueprint(
+    'hometask_api',
     __name__,
     template_folder='templates'
 )
 
 
-@blueprint.route('/addhometask', methods=['GET', 'POST'])
+@hometask_blueprint.route('/addhometask', methods=['GET', 'POST'])
 def add_job():
     form = AddTaskForm()
     if form.validate_on_submit():
@@ -21,11 +21,12 @@ def add_job():
             teacher=form.teacher.data,
             students=form.students.data,
             subject=form.subject.data,
+            date=form.date.data
         )
         db_sess.add(user)
         db_sess.commit()
         return flask.redirect('/')
-    return flask.render_template('addjob.html', title='Добавление Работы', form=form)
+    return flask.render_template('addtask.html', title='Добавление Работы', form=form)
 
 
 # @blueprint.route('/hometasks')
