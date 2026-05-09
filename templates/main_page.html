@@ -14,7 +14,9 @@
         <a class="navbar-brand" href="#">Задания:</a>
         {% if current_user.is_authenticated %}
           <p>
-            <a class="btn btn-primary" href="/addhometask">Новое ДЗ</a>
+            {% if current_user.status == 'teacher' %}
+              <a class="btn btn-primary" href="/addhometask">Новое ДЗ</a>
+            {% endif %}
             <a class="navbar-brand" href="/logout">{{ current_user.name }}</a>
           </p>
         {% else %}
