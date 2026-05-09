@@ -1,5 +1,5 @@
 import flask
-from flask_login import LoginManager, login_user, login_required, logout_user
+from flask_login import login_user, login_required, logout_user
 
 from . import db_session
 from .users import User

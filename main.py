@@ -1,5 +1,5 @@
 from flask import Flask, render_template
-from flask_login import LoginManager, login_user, login_required, logout_user
+from flask_login import LoginManager
 
 
 from data.db_session import global_init, create_session
