@@ -13,7 +13,13 @@
         <div>Ученики: {{ names.get(job.students, 'Unknown') }}</div>
         <div>Срок сдачи: {{ job.date }}</div>
         <div>Предмет: {{ job.subject }}</div>
-        <div>Файлы: {{ job.file or 'No file' }}</div>
+        <div>Файлы:
+         {% if job.file %}
+          <a href="/homeworks/{{ job.id }}/file">Скачать файл</a>
+         {% else %}
+          No file
+        {% endif %}
+        </div>
     </div>
     {% endfor %}
 </div>

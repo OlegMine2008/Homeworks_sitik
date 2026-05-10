@@ -3,7 +3,7 @@
 {% block content %}
 <h1>Добавление ДЗ</h1>
 
-<form action="" method="post">
+<form action="" method="post" enctype="multipart/form-data">
     {{ form.hidden_tag() }}
     {{ form.csrf_token }}
     <p>
@@ -16,7 +16,7 @@
     {% endfor %}
     </p>
     <p>
-        <label for="teacher_name">Teacher</label><br>
+        <label for="teacher_name">Учитель</label><br>
         <input id="teacher_name" class="form-control" value="{{ teacher_name }}" readonly><br>
     </p>
     <p>
@@ -46,7 +46,16 @@
     </p>
     {% endfor %}
     </p>
+    <p>
+        {{ form.file.label }}<br>
+        {{ form.file(class="form-control") }}<br>
+        {% for error in form.file.errors %}
+    <p class="alert alert-danger" role="alert">
+        {{ error }}
+    </p>
+    {% endfor %}
+    </p>
     <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
-    {{message}}
+    {{ message }}
 </form>
 {% endblock %}

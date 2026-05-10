@@ -5,6 +5,7 @@ from .db_session import SqlAlchemyBase
 from .subject import Subject
 from .users import User
 
+
 class Hometask(SqlAlchemyBase):
     __tablename__ = 'homeworks'
 
