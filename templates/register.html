@@ -1,7 +1,7 @@
 {% extends "main_page.html" %}
 
 {% block content %}
-<h1>Register Form</h1>
+<h1>Регистрация</h1>
 
 <form action="" method="post">
     {{ form.hidden_tag() }}
@@ -43,7 +43,7 @@
     {% endfor %}
     </p>
     <p>
-        {{ form.status.select }}<br>
+        {{ form.status.label }}<br>
         {{ form.status(class="form-control") }}<br>
         {% for error in form.status.errors %}
     <p class="alert alert-danger" role="alert">
@@ -51,7 +51,30 @@
     </p>
     {% endfor %}
     </p>
+    <div id="teacher-password-block" style="display: none;">
+        <p>
+            {{ form.teacher_password.label }}<br>
+            {{ form.teacher_password(class="form-control", type="password") }}<br>
+            {% for error in form.teacher_password.errors %}
+        <p class="alert alert-danger" role="alert">
+            {{ error }}
+        </p>
+        {% endfor %}
+        </p>
+    </div>
     <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
     {{message}}
 </form>
+
+<script>
+    const statusField = document.getElementById("status");
+    const teacherPasswordBlock = document.getElementById("teacher-password-block");
+
+    function toggleTeacherPassword() {
+        teacherPasswordBlock.style.display = statusField.value === "teacher" ? "block" : "none";
+    }
+
+    toggleTeacherPassword();
+    statusField.addEventListener("change", toggleTeacherPassword);
+</script>
 {% endblock %}

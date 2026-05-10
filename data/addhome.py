@@ -1,12 +1,11 @@
 from flask_wtf import FlaskForm
-from wtforms import SubmitField, StringField, SelectField
+from wtforms import SelectField, StringField, SubmitField
 from wtforms.validators import DataRequired
 
 
 class AddTaskForm(FlaskForm):
     homework = StringField('Домашнее задание', validators=[DataRequired()])
-    teacher = StringField('ID Учителя', validators=[DataRequired()])
-    students = StringField('ID Учеников(оставить пустым, если задание для всех)')
+    students = SelectField('Ученик', choices=[], coerce=int, default=0)
     subject = StringField('Предмет ID', validators=[DataRequired()])
     date = StringField('Срок сдачи', validators=[DataRequired()])
-    submit = SubmitField('Submit')
+    submit = SubmitField('Подтвердить')

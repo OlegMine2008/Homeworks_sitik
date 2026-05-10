@@ -1,10 +1,12 @@
 import flask
-from flask_login import login_user, login_required, logout_user
+from flask_login import login_required, login_user, logout_user
 
 from . import db_session
-from .users import User
-from .register_form import RegisterForm
 from .login_form import LoginForm
+from .register_form import RegisterForm
+from .users import User
+
+TEACHER_REGISTRATION_PASSWORD = 'school_for_homework'
 
 user_blueprint = flask.Blueprint(
     'user_api',
@@ -18,12 +20,29 @@ def register():
     form = RegisterForm()
     if form.validate_on_submit():
         if form.password.data != form.password_again.data:
-            return flask.render_template('register.html', title='Register', form=form,
-                                   message="Passwords don't match")
+            return flask.render_template(
+                'register.html',
+                title='Регистрация',
+                form=form,
+                message="Пароли не совпадают"
+            )
+        if form.status.data == 'teacher' and form.teacher_password.data != TEACHER_REGISTRATION_PASSWORD:
+            return flask.render_template(
+                'register.html',
+                title='Регистрация',
+                form=form,
+                message='Неверный пароль учителя'
+            )
+
         db_sess = db_session.create_session()
         if db_sess.query(User).filter(User.email == form.email.data).first():
-            return flask.render_template('register.html', title='Register', form=form,
-                                   message="This user already exists")
+            return flask.render_template(
+                'register.html',
+                title='Регистрация',
+                form=form,
+                message="Пользователь уже существует"
+            )
+
         user = User(
             name=form.name.data,
             status=form.status.data,
@@ -33,7 +52,9 @@ def register():
         db_sess.add(user)
         db_sess.commit()
         return flask.redirect('/login')
+
     return flask.render_template('register.html', title='Регистрация', form=form)
+
 
 @user_blueprint.route('/login', methods=['GET', 'POST'])
 def login():
@@ -44,10 +65,13 @@ def login():
         if user and user.check_password(form.password.data):
             login_user(user, remember=form.remember_me.data)
             return flask.redirect("/")
-        return flask.render_template('login.html',
-                               message="Неправильный логин или пароль",
-                               form=form)
+        return flask.render_template(
+            'login.html',
+            message="Неправильный логин или пароль",
+            form=form
+        )
     return flask.render_template('login.html', title='Авторизация', form=form)
+
 
 @user_blueprint.route('/logout')
 @login_required

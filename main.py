@@ -30,7 +30,7 @@ def index():
     jobs = db_sess.query(Hometask).all()
     users = db_sess.query(User).all()
     names = {name.id: (name.name) for name in users}
-    return render_template('index.html', names=names, jobs=jobs, title='Work log')
+    return render_template('index.html', names=names, jobs=jobs, title='Homeworks FOREVER')
 
 
 def main():

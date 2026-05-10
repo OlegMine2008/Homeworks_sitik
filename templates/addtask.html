@@ -1,7 +1,7 @@
 {% extends "main_page.html" %}
 
 {% block content %}
-<h1>Add Hometask Form</h1>
+<h1>Добавление ДЗ</h1>
 
 <form action="" method="post">
     {{ form.hidden_tag() }}
@@ -16,13 +16,8 @@
     {% endfor %}
     </p>
     <p>
-        {{ form.teacher.label }}<br>
-        {{ form.teacher(class="form-control") }}<br>
-        {% for error in form.teacher.errors %}
-    <p class="alert alert-danger" role="alert">
-        {{ error }}
-    </p>
-    {% endfor %}
+        <label for="teacher_name">Teacher</label><br>
+        <input id="teacher_name" class="form-control" value="{{ teacher_name }}" readonly><br>
     </p>
     <p>
         {{ form.students.label }}<br>
