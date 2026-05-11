@@ -31,7 +31,10 @@ def index():
     now = time.time()
     jobs = []
     for job in db_sess.query(Hometask).all():
-        if current_user.is_authenticated and current_user.status == 'teacher' and str(job.teacher) != str(current_user.id):
+        if current_user.is_authenticated and current_user.status == 'teacher':
+            if str(job.teacher) != str(current_user.id):
+                continue
+            jobs.append(job)
             continue
 
         try:
