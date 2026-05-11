@@ -39,7 +39,7 @@
     </p>
     <p>
         {{ form.date.label }}<br>
-        {{ form.date(class="form-control") }}<br>
+        {{ form.date(class="form-control", placeholder="DD.MM.YYYY", pattern="\\d{2}\\.\\d{2}\\.\\d{4}", title="Format: DD.MM.YYYY") }}<br>
         {% for error in form.date.errors %}
     <p class="alert alert-danger" role="alert">
         {{ error }}
@@ -59,3 +59,4 @@
     {{ message }}
 </form>
 {% endblock %}
+

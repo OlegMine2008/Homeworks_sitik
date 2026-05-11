@@ -1,5 +1,6 @@
+import time
 from flask import Flask, render_template
-from flask_login import LoginManager
+from flask_login import LoginManager, current_user
 
 
 from data.db_session import global_init, create_session
@@ -27,7 +28,35 @@ def load_user(user_id):
 @app.route('/')
 def index():
     db_sess = create_session()
-    jobs = db_sess.query(Hometask).all()
+    now = time.time()
+    jobs = []
+    for job in db_sess.query(Hometask).all():
+        if current_user.is_authenticated and current_user.status == 'teacher' and str(job.teacher) != str(current_user.id):
+            continue
+
+        try:
+            deadline = time.mktime(time.strptime(str(job.date).strip(), '%d.%m.%Y'))
+        except (TypeError, ValueError, OverflowError):
+            continue
+
+        is_public = job.students in (None, '', 0, '0')
+        days_before = 7 if is_public else 14
+        seconds_left = deadline - now
+
+        if seconds_left < 0 or seconds_left > days_before * 24 * 60 * 60:
+            continue
+
+        if is_public:
+            jobs.append(job)
+            continue
+
+        if not current_user.is_authenticated:
+            continue
+
+        current_user_id = str(current_user.id)
+        if current_user_id in (str(job.students), str(job.teacher)):
+            jobs.append(job)
+
     users = db_sess.query(User).all()
     names = {name.id: (name.name) for name in users}
     return render_template('index.html', names=names, jobs=jobs, title='Homeworks FOREVER')

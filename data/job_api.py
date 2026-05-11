@@ -1,5 +1,6 @@
 import flask
 import os
+import time
 from flask import send_from_directory, abort
 from flask_login import current_user, login_required
 
@@ -37,6 +38,18 @@ def add_job():
     ]
 
     if form.validate_on_submit():
+        date_value = form.date.data.strip()
+        try:
+            time.strptime(date_value, '%d.%m.%Y')
+        except (TypeError, ValueError):
+            form.date.errors.append('Введите корректную дату в формате ДД.ММ.ГГГГ')
+            return flask.render_template(
+                'addtask.html',
+                title='Добавление работы',
+                form=form,
+                teacher_name=current_user.name
+            )
+
         file_path = None
         if form.file.data and getattr(form.file.data, 'filename', ''):
             os.makedirs(UPLOAD_FILES, exist_ok=True)
@@ -46,18 +59,18 @@ def add_job():
                 save_path = os.path.join(UPLOAD_FILES, original_name)
                 form.file.data.save(save_path)
                 file_path = os.path.join('uploads', 'homeworks', original_name).replace('\\', '/')
-            
-            hometask = Hometask(
-                homework=form.homework.data,
-                teacher=current_user.id,
-                students=form.students.data or None,
-                subject=form.subject.data,
-                date=form.date.data,
-                file=file_path
-                )
-            db_sess.add(hometask)
-            db_sess.commit()
-            return flask.redirect('/')
+
+        hometask = Hometask(
+            homework=form.homework.data,
+            teacher=current_user.id,
+            students=form.students.data or None,
+            subject=form.subject.data,
+            date=date_value,
+            file=file_path
+            )
+        db_sess.add(hometask)
+        db_sess.commit()
+        return flask.redirect('/')
         
     return flask.render_template(
         'addtask.html',
@@ -84,3 +97,4 @@ def load_file(id):
         abort(404)
 
     return send_from_directory(dir, filename, as_attachment=True)
+

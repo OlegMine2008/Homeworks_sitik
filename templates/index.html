@@ -10,14 +10,14 @@
     <div class="card">
         <div>{{ job.homework.capitalize() }}</div>
         <div>Учитель: {{ names.get(job.teacher, 'Unknown') }}</div>
-        <div>Ученики: {{ names.get(job.students, 'Unknown') }}</div>
+        <div>Ученики: {{ names.get(job.students, 'Всем') }}</div>
         <div>Срок сдачи: {{ job.date }}</div>
-        <div>Предмет: {{ job.subject }}</div>
+        <div>Предмет: {{ names.get(job.subject, 'Unknown') }}</div>
         <div>Файлы:
          {% if job.file %}
           <a href="/homeworks/{{ job.id }}/file">Скачать файл</a>
          {% else %}
-          No file
+          Файл отсутствует
         {% endif %}
         </div>
     </div>
