@@ -12,7 +12,7 @@
         <div>Учитель: {{ names.get(job.teacher, 'Unknown') }}</div>
         <div>Ученики: {{ names.get(job.students, 'Всем') }}</div>
         <div>Срок сдачи: {{ job.date }}</div>
-        <div>Предмет: {{ names.get(job.subject, 'Unknown') }}</div>
+        <div>Предмет: {{ job.subjects.name if job.subjects else 'Ошибка' }}</div>
         <div>Файлы:
          {% if job.file %}
           <a href="/homeworks/{{ job.id }}/file">Скачать файл</a>
@@ -20,6 +20,7 @@
           Файл отсутствует
         {% endif %}
         </div>
+        <div><a class="btn btn-warning " href="/edittask">Изменить</a></div>
     </div>
     {% endfor %}
 </div>
