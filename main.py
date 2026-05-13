@@ -31,34 +31,39 @@ def index():
     now = time.time()
     jobs = []
     for job in db_sess.query(Hometask).all():
-        if current_user.is_authenticated and current_user.status == 'teacher':
-            if str(job.teacher) != str(current_user.id):
+        if deadline < now:
+            db_sess.delete(job)
+            db_sess.commit()
+        else:
+            if current_user.is_authenticated and current_user.status == 'teacher':
+                if str(job.teacher) != str(current_user.id):
+                    continue
+                jobs.append(job)
                 continue
-            jobs.append(job)
-            continue
 
-        try:
-            deadline = time.mktime(time.strptime(str(job.date).strip(), '%d.%m.%Y'))
-        except (TypeError, ValueError, OverflowError):
-            continue
+            try:
+                deadline = time.mktime(time.strptime(str(job.date).strip(), '%d.%m.%Y'))
+            except (TypeError, ValueError, OverflowError):
+                continue
 
-        is_public = job.students in (None, '', 0, '0')
-        days_before = 7 if is_public else 14
-        seconds_left = deadline - now
+            
+            is_public = job.students in (None, '', 0, '0')
+            days_before = 7 if is_public else 14
+            seconds_left = deadline - now
 
-        if seconds_left < 0 or seconds_left > days_before * 24 * 60 * 60:
-            continue
+            if seconds_left < 0 or seconds_left > days_before * 24 * 60 * 60:
+                continue
 
-        if is_public:
-            jobs.append(job)
-            continue
+            if is_public:
+                jobs.append(job)
+                continue
 
-        if not current_user.is_authenticated:
-            continue
+            if not current_user.is_authenticated:
+                continue
 
-        current_user_id = str(current_user.id)
-        if current_user_id in (str(job.students), str(job.teacher)):
-            jobs.append(job)
+            current_user_id = str(current_user.id)
+            if current_user_id in (str(job.students), str(job.teacher)):
+                jobs.append(job)
 
     users = db_sess.query(User).all()
     names = {name.id: (name.name) for name in users}
