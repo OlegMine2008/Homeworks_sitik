@@ -17,7 +17,8 @@
             {% if current_user.status == 'teacher' %}
               <a class="btn btn-primary" href="/addhometask">Новое ДЗ</a>
             {% endif %}
-            <a class="navbar-brand" href="/logout">{{ current_user.name }}</a>
+            <a class="btn btn-danger" href="/logout">Выйти</a>
+            <a class="navbar-brand">{{ current_user.name }}</a>
           </p>
         {% else %}
           <p>

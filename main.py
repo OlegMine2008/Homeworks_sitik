@@ -61,8 +61,8 @@ def index():
             if not current_user.is_authenticated:
                 continue
 
-            current_user_id = str(current_user.id)
-            if current_user_id in (str(job.students), str(job.teacher)):
+            current_user_id = current_user.id
+            if job.students is not None and current_user_id == job.students:
                 jobs.append(job)
 
     users = db_sess.query(User).all()
