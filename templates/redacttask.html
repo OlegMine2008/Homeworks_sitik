@@ -13,7 +13,7 @@
     <p class="alert alert-danger" role="alert">
         {{ error }}
     </p>
-    {% endfor %}
+        {% endfor %}
     </p>
     <p>
         <label for="teacher_name">Учитель</label><br>
@@ -26,16 +26,11 @@
     <p class="alert alert-danger" role="alert">
         {{ error }}
     </p>
-    {% endfor %}
+        {% endfor %}
     </p>
     <p>
-        {{ form.subject.label }}<br>
-        {{ form.subject(class="form-control") }}<br>
-        {% for error in form.subject.errors %}
-    <p class="alert alert-danger" role="alert">
-        {{ error }}
-    </p>
-    {% endfor %}
+        <label for="subject">Предмет</label><br>
+        <input id="subject" class="form-control" value="{{ subject }}" readonly><br>
     </p>
     <p>
         {{ form.date.label }}<br>
@@ -44,7 +39,7 @@
     <p class="alert alert-danger" role="alert">
         {{ error }}
     </p>
-    {% endfor %}
+        {% endfor %}
     </p>
     <p>
         {{ form.file.label }}<br>
@@ -53,10 +48,9 @@
     <p class="alert alert-danger" role="alert">
         {{ error }}
     </p>
-    {% endfor %}
+        {% endfor %}
     </p>
     <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
     {{ message }}
 </form>
 {% endblock %}
-

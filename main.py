@@ -31,6 +31,11 @@ def index():
     now = time.time()
     jobs = []
     for job in db_sess.query(Hometask).all():
+        try:
+            deadline = time.mktime(time.strptime(str(job.date).strip(), '%d.%m.%Y'))
+        except (TypeError, ValueError, OverflowError):
+            continue
+
         if deadline < now:
             db_sess.delete(job)
             db_sess.commit()
@@ -39,11 +44,6 @@ def index():
                 if str(job.teacher) != str(current_user.id):
                     continue
                 jobs.append(job)
-                continue
-
-            try:
-                deadline = time.mktime(time.strptime(str(job.date).strip(), '%d.%m.%Y'))
-            except (TypeError, ValueError, OverflowError):
                 continue
 
             
@@ -67,7 +67,7 @@ def index():
 
     users = db_sess.query(User).all()
     names = {name.id: (name.name) for name in users}
-    return render_template('index.html', names=names, jobs=jobs, title='Homeworks FOREVER')
+    return render_template('index.html', names=names, jobs=jobs, title='ДЗ Навеки')
 
 
 def main():

@@ -8,7 +8,6 @@ from wtforms.validators import DataRequired, Regexp, ValidationError
 class RedactTaskForm(FlaskForm):
     homework = StringField('Домашнее задание', validators=[DataRequired()])
     students = SelectField('Ученик', choices=[], coerce=int, default=0)
-    subject = SelectField('Предмет', choices=[], coerce=int, validators=[DataRequired()])
     date = StringField(
         'Срок сдачи',
         validators=[
