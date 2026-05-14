@@ -98,3 +98,8 @@ def load_file(id):
 
     return send_from_directory(dir, filename, as_attachment=True)
 
+
+@hometask_blueprint.route('/edittask')
+@login_required
+def edit_task():
+    pass

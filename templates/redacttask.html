@@ -1,0 +1,62 @@
+{% extends "main_page.html" %}
+
+{% block content %}
+<h1>Изменение ДЗ</h1>
+
+<form action="" method="post" enctype="multipart/form-data">
+    {{ form.hidden_tag() }}
+    {{ form.csrf_token }}
+    <p>
+        {{ form.homework.label }}<br>
+        {{ form.homework(class="form-control") }}<br>
+        {% for error in form.homework.errors %}
+    <p class="alert alert-danger" role="alert">
+        {{ error }}
+    </p>
+    {% endfor %}
+    </p>
+    <p>
+        <label for="teacher_name">Учитель</label><br>
+        <input id="teacher_name" class="form-control" value="{{ teacher_name }}" readonly><br>
+    </p>
+    <p>
+        {{ form.students.label }}<br>
+        {{ form.students(class="form-control") }}<br>
+        {% for error in form.students.errors %}
+    <p class="alert alert-danger" role="alert">
+        {{ error }}
+    </p>
+    {% endfor %}
+    </p>
+    <p>
+        {{ form.subject.label }}<br>
+        {{ form.subject(class="form-control") }}<br>
+        {% for error in form.subject.errors %}
+    <p class="alert alert-danger" role="alert">
+        {{ error }}
+    </p>
+    {% endfor %}
+    </p>
+    <p>
+        {{ form.date.label }}<br>
+        {{ form.date(class="form-control", placeholder="DD.MM.YYYY", pattern="\\d{2}\\.\\d{2}\\.\\d{4}", title="Format: DD.MM.YYYY") }}<br>
+        {% for error in form.date.errors %}
+    <p class="alert alert-danger" role="alert">
+        {{ error }}
+    </p>
+    {% endfor %}
+    </p>
+    <p>
+        {{ form.file.label }}<br>
+        {{ form.file(class="form-control") }}<br>
+        {% for error in form.file.errors %}
+    <p class="alert alert-danger" role="alert">
+        {{ error }}
+    </p>
+    {% endfor %}
+    </p>
+    <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
+    {{ message }}
+</form>
+{% endblock %}
+
